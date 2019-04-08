@@ -196,56 +196,51 @@ In order to create a new project and to get our development environment setup, w
 First, let's use `npm` to install `create-react-app` globally so we'll always have it available in our Terminal:
 
 ```bash
-npm install -g create-react-app
+$ npm install -g create-react-app
 ```
 
-Once it's installed, create a new directory to store the app you're about to write and `cd` into the folder. Then, use the tool to create a new React app. 
-You'll have to give your new app a name; we're calling the example app `hello-world`, since that'll be our first project.
+Once it's installed, create a new directory to store the app you're about to write and `cd` into the folder.
 
 ```sh
-npm init react-app hello-world
+$ npm init react-app hello-world
 ```
 
-The tool creates a new directory called `hello-world` inside the current folder. Once the installation is done, you can open your project folder in your text editor:
+Success! Created hello-world at `../wdi/jeopardy/sandbox/hello-world`
+
+> Note: `create-react-app` initializes a git repository.
+
+The tool creates a new directory called `hello-world` inside the current folder. Once the installation is done, you can `cd` into the project folder and open it in your text editor:
 
 ```sh
-cd hello-world
+$ cd hello-world/
 subl .
 ```
 
-Use `npm start` to start a server that will serve your new React application:
+The project folder structure should look like the following:
+
+![react-app folder structure](./images/react-app-folder-structure.png)
+
+Inside the `package.json` file, you will see several **scripts** have been provided that allows you to run several commands from Terminal:
+
+>  _npm start_. Starts the development server.
+
+>  _npm build_. Bundles the app into static files for production.
+
+>  _npm test_. Starts the test runner.
+
+>  _npm eject_. Removes this tool and copies build dependencies, configuration files and scripts into the app directory. **Beware: If you do this, you can’t go back!**
+
+You will also see that several **dependencies** have been installed: react, react-dom and react-scripts. To start up the application, in the Terminal begin by typing:
 
 ```bash
-npm run start
+npm start
 ```
 
-After running `$ npm run start`, we can view the app at `http://localhost:3000`
+After running `$ npm start`, we can view the app at `http://localhost:3000`
 
-> You have now set up a Hello World app!
+> Hooray for automatic rerendering on save! This is an awesome feature called live reloading that `create-react-app` comes with. The default app should now be running on port 3000 so switching over to our browser [`localhost:3000`](http://localhost:3000), we'll automatically see the boilerplate `create-react-app` React application.
 
 > Note: If you ever need to stop the server, you can hit `ctrl-c` in the terminal window.
-
-You'll notice the web page automatically refreshes every time we save a file in the directory. This is an awesome feature called live reloading that `create-react-app` comes with.
-
-Look in the directory and see the initial project structure that `create-react-app` provides and all its dependencies:
-
-```sh
-hello_world
-├── README.md
-├── package.json
-├── public
-│   ├── favicon.ico
-│   └── index.html
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── index.css
-    ├── index.js
-    └── logo.svg
-```
-
-Most of the important files, which are primarily the ones where we will be working with today, are in the `src` directory.
 
 ---
 
@@ -650,3 +645,102 @@ If you check the page now, you'll see React prints the entire array, as that's w
 Check it out!
 
 _[Read more about using props in JSX, if you'd like!](https://facebook.github.io/react/docs/jsx-in-depth.html) This link is also in the Further Reading page at the end of the React module, under the Facebook documentation._
+
+### You Do - A Blog Post
+
+Let's have some practice creating a React component from scratch. How about a blog post?
+
+* Create a `post` object literal in `src/index.js` above `ReactDOM.render()` that has the below properties.
+  1. `title`
+  2. `author`
+  3. `body`
+  4. `comments` (array of strings)
+* Render these properties using a Post component.
+* The composition of your Post is up to you.
+
+If you finish early, try experimenting with CSS (Make Sure you use `className` instead of `class` in `JSX`!)
+
+---
+
+#### Q: What problems did you encounter when trying to add multiple comments to your Post?
+
+It would be a pain to have to explicitly define every comment inside of `<Post />`, especially if each comment itself had multiple properties.
+
+* This problem is a tell tale sign that our separation of concerns is being stretched, and it's time to break things into a new component.
+
+We can nest a `Comment` component within a `Post` component.
+
+* We create these comments the same way we did with posts: `extends Component` and `render`
+* Then we can reference a comment using `<Comment />` inside of Post's render method.
+
+Let's create a new file for our Comment component, `src/Comment.js`...
+
+```js
+import React, {Component} from 'react'
+
+class Comment extends Component {
+  render () {
+    return (
+      <div>
+        <p>{this.props.message}</p>
+      </div>
+    )
+  }
+}
+
+export default Comment
+```
+
+Then in `src/App.js`, we need to load in our `Comment` component and render it inside of our `Post` component...
+
+```js
+import React, { Component } from 'react';
+// Load in Comment component
+import Comment from './Comment.js'
+
+
+class Post extends Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <p>By {this.props.author}</p>
+        <div>
+          <p>{this.props.body}</p>
+        </div>
+        <h3>Comments:</h3>
+        // Render Comment component, passing in data
+        <Comment message={this.props.comments[0]} />
+      </div>
+    );
+  }
+}
+
+export default Post;
+```
+
+> **Note**: We could put all of our code in one file, but it's considered a good practice to break components out into different files to help practice separation of concerns. The only downside is we have to be extra conscious of remembering to **export / import** each component to where it's rendered.
+
+The above code works, but we'd have to hard-code all of our `Comments`.  This is not very dry and our code will not dynamically change.  The best way to handle this is to set a variable equal to all of the `<Comments />` for this post.  We can do this using `.map` in `Post's` `render` method.
+
+We can use `.map` in `Post's` `render` method to avoid having to hard-code all of our `Comments`
+
+```js
+class Post extends Component {
+  render() {
+    let comments = this.props.comments.map((comment, index) => (
+      <Comment message={comment} key={index}/>
+    ))
+    return(
+      <div className='post-page'>
+        <h1>{this.props.title}</h1>
+        <h2>By {this.props.author}</h2>
+        <p>{this.props.body}</p>
+
+        <h3>Comments</h3>
+        {comments}
+      </div>
+    )
+  }
+}
+```
