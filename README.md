@@ -360,7 +360,7 @@ The JSX creates a heading with 'Hello World!'.
 
 ## Virtual DOM Intro
 
-You may have noticed that our src/index.js code mentions ReactDOM. ReactDOM doesn't refer to the same DOM we know. Instead, it refers to a Virtual DOM. The Virtual DOM is a key piece of how React works.
+You may have noticed that our `src/index.js` code mentions ReactDOM. ReactDOM doesn't refer to the same DOM we know. Instead, it refers to a Virtual DOM. The Virtual DOM is a key piece of how React works.
 
 So, how is this different? Watch [this video](https://generalassembly.wistia.com/medias/v5qyqsir0s) to find out.
 
@@ -370,6 +370,8 @@ The Virtual DOM is a Javascript representation of the actual DOM. The virtual DO
 - React then isolates the changes between old and new instances of the Virtual DOM and then only updates the actual DOM with the necessary changes.
 - By only making the "necessary changes," as opposed to re-rendering an entire view altogether, we save up on processing power.
 - This is not unlike Git, with which you compare the difference -- or diff -- between two commits.
+
+![Virtual DOM Diagram](https://docs.google.com/drawings/d/11ugBTwDkqn6p2n5Fkps1p3Elp8ZToIRzXzvM4LJMYaU/pub?w=543&h=229)
 
 The JSX
 
@@ -395,8 +397,29 @@ and React's virtual DOM representation of this is
 ```
 
 Since React keeps this representation of what is on the page, it can be very
-smart when it updates the page only to change the DOM that needs to be changed.
-More on this later.
+smart when it updates the page only to change the DOM that needs to be changed. More on this later.
+
+> If you're interested in learning more about the Virtual DOM, [check this video out](https://www.youtube.com/watch?v=-DX3vJiqxm4).
+
+So we've created the template for our component. Now, let's use `/src/index.js` to load in our new component and render it on the DOM.
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Hello from './App.js'
+
+ReactDOM.render(
+  <Hello />,
+  document.getElementById('root')
+)
+```
+
+`ReactDOM.render` takes the Virtual DOM node and adds it to the actual DOM. It takes two arguments.
+
+  1. The component.
+  2. The DOM element we want to append it to.
+
+> **NOTE:** Whenever you use a self-closing tag in JSX, you **MUST** end it with a `/` like `<Hello />` in the above example.
 
 ## Props
 
@@ -405,11 +428,43 @@ More on this later.
 * Describe the role props plays in our applications
 * Create a component that renders props
 
+### What are Props?
+
+Properties! Every component has `.props`
+
+* Properties are immutable. That is, they cannot be changed while your program is running.
+* We define properties in development and pass them in as attributes to the JSX element in our `.render` method.
+
+First we can pass multiple properties to our component when its rendered in `src/index.js`.
+
+```js
+ReactDOM.render(
+  <Hello name={"Tamara"} city={Brooklyn} />,
+  document.getElementById('root')
+)
+```
+
+Then in our component definition we have access to both values...
+
+```js
+class Hello extends Component {
+  render () {
+    return (
+      <div>
+        <h1>Hello {this.props.name}</h1>
+        <p>You currently live in {this.props.city}.</p>
+      </div>
+    )
+  }
+}
+
+```
+
 ### Component Data with Props
 
 The React framework was built to handle data that changes over time.
 
-So far, we have defined a `Event` component. The component returns a `div` with a few elements, written in JSX.
+So far, we have defined a `Hello` component. The component returns a `div` with a few elements, written in JSX.
 
 In `App.js`, we are importing this component.
 
@@ -417,11 +472,11 @@ This is great, but it doesn't involve any data yet, let alone data that changes 
 
 Let's make it more interesting.
 
-Rather than displaying the hardcoded data, let's change the event data dynamically.
+Rather than displaying the hardcoded data, let's change the hello data dynamically.
 
-The question is, how do we add a name to our `Event` component without hardcoding it?
+The question is, how do we add a name to our `Hello` component without hardcoding it?
 
-Find out! Try it yourself alongside [this video](https://generalassembly.wistia.com/medias/gchiu63slo) in [this codepen](https://codepen.io/susir/pen/vxWypq) _(note: right click both for new tab!)_
+Find out! Try it yourself alongside [this video](https://generalassembly.wistia.com/medias/gchiu63slo) in [this codepen](https://codepen.io/celestelayne/pen/axBvyw?editors=0010) _(note: right click both for new tab!)_
 
 ### You Do - Hello World Exercise
 
@@ -435,47 +490,41 @@ We want to make a greeting that's reusable for many different users, so we'll ha
 
 In your `src/App.js`, we'll change the line that renders the `Event` component to include this `title` prop. The new line will be:
 
-`<Event title="Eric's Birthday Party" />`
+`<Hello name="Jennifer" />`
 
-> We pass in data wherever we are rendering our component. In rendering the `Event` component above, we pass in a prop called "title" with a value of "Eric's Birthday Party".
+> We pass in data wherever we are rendering our component, in this case in `src/index.js`. In rendering the `Hello` component above, we pass in a prop called "name" with a value of "Jennifer".
 
-```
+```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Hello from './App.js';
 
 ReactDOM.render(
-  <Hello name={"Nick"} />,
+  <Hello name={"Tamara"} />,
   document.getElementById('root')
 )
 ```
 
 Now, every time we render our component, we will pass in data.
 
-If you check your application now, nothing has changed. We're passing the `title` prop into the component, but the component isn't _using_ it yet.
+If you check your application now, nothing has changed. We're passing the `name` prop into the component, but the component isn't _using_ it yet.
 
-In our component definition, we can use the `this.props.title` variable to access the value passed into the component.
+In our component definition we can use the `this.props.name` variable to access the value passed into the component.
 
 ```js
-// bring in React from react
-import React, { Component } from "react";
-
-// define our Hello component
-class Event extends Component {
+class Hello extends Component {
   render() {
-    // what should the component render?
-    // make sure to return some UI
     return (
       <div>
-        <h2>{this.props.title}</h2>
-        <p>7:45 - 9 pm</p>
+        <h2>{this.props.name}</h2>
+        <p>New York City</p>
       </div>
     );
   }
 }
-
-export default Event;
 ```
+
+In the above example, we replaced "world" with `{this.props.name}`.
 
 > The `{}` syntax in JSX renders the result of any JavaScript expression inside it. It works even without props. If you wrote `{2+2}` in your JSX, `4` would be rendered.
 
@@ -492,7 +541,7 @@ export default Event;
 
 Of course, we often want components to display more complex information. To do so, we can pass multiple properties to our component! We'll use the same two steps we took to add the first prop.
 
-First, add another prop to the component call: `<Event title="Eric's Birthday Party" />,` changes to `<Hello name="Eric's Birthday Party" time="7:45 - 9pm" />`.
+First, add another prop to the component call: `<Hello name="Jennifer" />,` changes to `<Hello name="Tamara" city="Brooklyn" />`.
 
 Update your `index.js` file to reflect this:
 
@@ -502,19 +551,19 @@ import ReactDOM from 'react-dom';
 import Hello from './App';
 
 ReactDOM.render(
-  <Hello name={"Nick"} age={24} />,
+  <Hello name={"Tamara"} city={"Brooklyn"} />,
   document.getElementById('root')
 )
 ```
 
-Now, in our component definition we have access to both values. Try updating the `Hello` component using `props.age` in the place we hardcoded the value previously.
+Now, in our component definition we have access to both values. Try updating the `Hello` component using `props.city` in the place we hardcoded the value previously.
 
-```
+```js
 export default function Hello(props) {
   return (
     <div>
       <h1>Hello {props.name}!</h1>
-      <p>You are {props.age} years old.</p>
+      <p>You currently live in {props.city}.</p>
     </div>
   );
 };
@@ -526,27 +575,27 @@ export default function Hello(props) {
 
 If we have many props, it might get difficult to keep track when we're passing everything in to render a component. A better practice is to organize values in some kind of object and then pass props to the component from that object. Let's see this strategy.
 
-Currently, in index.js, we put Nick's name and age directly into the ReactDOM.render call. Instead, we'll create an object that holds Nick's name and age, making it clearer for other developers and easier to change in the future. In your index.js file, below the import statements, add this object definition:
+Currently, in `index.js`, we put Tamara's name and city directly into the ReactDOM.render call. Instead, we'll create an object that holds Tamara's name and city, making it clearer for other developers and easier to change in the future. In your `index.js` file, below the import statements, add this object definition:
 
 ```
 var person = {
-  personName: "Nick",
-  personAge: 24
+  personName: "Tamara",
+  personAge: "Brooklyn"
 }
 ```
-Next, we'll update what's passed into the component. Near the bottom of your index.js, modify the ReactDOM.render() call:
+Next, we'll update what's passed into the component. Near the bottom of your `index.js`, modify the `ReactDOM.render()` call:
 
-```
+```js
 ReactDOM.render(
   <Hello
     name={person.personName}
-    age={person.personAge}
+    city={person.personCity}
   />,
   document.getElementById('root')
 )
 ```
 
-We don't have to change anything in App.jsx, because it's still receiving exactly the same values for exactly the same two props - name and age. We're just sending it those values in a slightly different way.
+We don't have to change anything in `App.jsx`, because it's still receiving exactly the same values for exactly the same two props - name and city. We're just sending it those values in a slightly different way.
 
 ### Multiple props from a more complex object
 
@@ -554,46 +603,46 @@ Since we're just pulling props out of an object, we can use any object we want. 
 
 Let's say our user has some favorite animals. Update your object to include an array:
 
-```
+```js
 const person = {
-  personName: "Nick",
-  personAge: 24,
+  personName: "Tamara",
+  personCity: "Brooklyn",
   favorites: [
     "capybaras",
     "Tigers",
-    "Dinosaurs count!"
+    "Dinosaurs"
   ],
 };
 ```
-Now we can use this new information as a prop, just like normal. You could choose to pass a single element (favorites[0]) or the entire array. We'll use the entire array so that the component can display all a person's favorite animals. First, update your ReactDOM.render() call in index.js:
+Now we can use this new information as a prop, just like normal. You could choose to pass a single element (favorites[0]) or the entire array. We'll use the entire array so that the component can display all a person's favorite animals. First, update your `ReactDOM.render()` call in `index.js`:
 
-```
+```js
 ReactDOM.render(
   <Hello
     name={person.personName}
-    age={person.personAge}
+    city={person.personCity}
     animals={person.favorites}
   />,
   document.getElementById('root')
 )
 ```
 
-If you check your application now, nothing has changed. Remember, a component class will just ignore any props it receives that it doesn't use. But, we want to use the favorite animals! So, second, update your Hello class render method in App.jsx:
+If you check your application now, nothing has changed. Remember, a component class will just ignore any props it receives that it doesn't use. But, we want to use the favorite animals! So, second, update your Hello class render method in `App.jsx`:
 
-```
+```js
 <div>
   <h1>Hello {props.name}!</h1>
-  <p>You are {props.age} years old.</p>
+  <p>You live in {props.city}.</p>
   <p>You love: {props.animals}</p>
 </div>
 ```
 
 If you check the page now, you'll see React prints the entire array, as that's what was passed in. If we wanted to include all the animals clearly, we could fix the spacing. Instead, to review some syntax, let's just modify the code to render the first value.
 
-```
+```js
 <div>
   <h1>Hello {props.name}!</h1>
-  <p>You are {props.age} years old.</p>
+  <p>You live in {props.city}.</p>
   <p>You love: {props.animals[0]}</p>
 </div>
 ```
