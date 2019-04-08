@@ -60,7 +60,11 @@ _If you want to get an in-depth taste of what React is all about, [here's an int
 
 React can be thought of as the "Views" layer.
 
-React will work with any back-end language, but for project 3 and in our in-class examples we will be using Mongoose and Express for the models and controllers.
+> **Sidenote:**
+> 
+> In an MVC architecture, M stands for Model, V stands for Views and C stands for Controller. The model refers to the database, the View is the presentation layer, it’s what the user sees and interacts with in the browser. The Controller makes the decisions based on requests and then controls what happens in response, like clicking on links and submitting forms. It controls the interaction with the Models and Views (passing data from one to the other).
+
+React will work with any back-end language. In Unit 3 we will be using Express and Sequelize for the models and controllers; while in Unit 4 we will be using Rails which handles both models and controllers.
 
 <details>
   <summary>What is the role of a <strong>view</strong> in a front-end Javascript application? Click arrow for answer:</summary>
@@ -70,8 +74,6 @@ React will work with any back-end language, but for project 3 and in our in-clas
 ## Components and JSX
 
 #### Learning Objectives
-
-_After this lesson, students will be able to:_
 
 *   Identify and define React components
 *   Describe why we use components in React
@@ -101,6 +103,8 @@ With components, there is more integration and less separation of code based pur
 When using React, building components will be your main front-end task.
 
 *   Because they're so encapsulated, components make it easy to reuse your code, test, and separate concerns.
+
+##### Let's look at the component structure of the Transport for London Tube Tracker
 
 ![Wireframe](images/train-wireframe.png)
 ![Wireframe with components](images/wireframe_deconstructed.png)
@@ -145,7 +149,7 @@ A React component is built to expect an input and render a UI with it. More impo
 
 This is because React follows a more **functional** approach to programming. For React components under this approach, **the same input will always produce the same output**.
 
-Best practice is that React components follow the **F.I.R.S.T.** guidelines
+Best practice is that React components follow the **F.I.R.S.T.** guidelines:
 
 #### Focused
 
@@ -187,7 +191,7 @@ As you're drawing this out, think about the following questions:
 
 ## Initial Setup
 
-In order to create a new project and to get our development environment setup, we are going to use the Terminal command [`create-react-app`](https://github.com/facebook/create-react-app). `create-react-app` is an NPM package built by Facebook that writes our build dependencies for us so that we can do less configuration. 
+In order to create a new project and to get our development environment setup, we are going to use the Terminal command [`create-react-app`](https://github.com/facebook/create-react-app). `create-react-app` is an npm package built by Facebook that writes our build dependencies for us so that we can do less configuration.
 
 First, let's use `npm` to install `create-react-app` globally so we'll always have it available in our Terminal:
 
@@ -196,16 +200,17 @@ npm install -g create-react-app
 ```
 
 Once it's installed, create a new directory to store the app you're about to write and `cd` into the folder. Then, use the tool to create a new React app. 
-You'll have to give your new app a name; we're calling the example app `hello_world`, since that'll be our first project.
+You'll have to give your new app a name; we're calling the example app `hello-world`, since that'll be our first project.
 
 ```sh
-npm init react-app hello_world
+npm init react-app hello-world
 ```
 
-The tool creates a new directory called `hello_world` inside the current folder. Once the installation is done, you can open your project folder:
+The tool creates a new directory called `hello-world` inside the current folder. Once the installation is done, you can open your project folder in your text editor:
 
 ```sh
-cd hello_world
+cd hello-world
+subl .
 ```
 
 Use `npm start` to start a server that will serve your new React application:
@@ -216,13 +221,13 @@ npm run start
 
 After running `$ npm run start`, we can view the app at `http://localhost:3000`
 
-> You have now set up a Hello World app that you will continue working on during this lesson's exercises!
+> You have now set up a Hello World app!
 
 > Note: If you ever need to stop the server, you can hit `ctrl-c` in the terminal window.
 
 You'll notice the web page automatically refreshes every time we save a file in the directory. This is an awesome feature called live reloading that `create-react-app` comes with.
 
-You can look in the directory and see the initial project structure that `create-react-app` provides for us and all its dependencies:
+Look in the directory and see the initial project structure that `create-react-app` provides and all its dependencies:
 
 ```sh
 hello_world
@@ -240,7 +245,7 @@ hello_world
     └── logo.svg
 ```
 
-Most of the important files, which are primarily the ones where we will be working today, are in the `src` directory.
+Most of the important files, which are primarily the ones where we will be working with today, are in the `src` directory.
 
 ---
 
@@ -254,7 +259,7 @@ Your basic React app is up and running. Now you're ready to add complexity.
 
 ### We Do: Hello World - A Very Basic Component
 
-To start, in our `/src/App.js` file, let's remove the contents and in its place add this component definition.
+To start, in our `/src/App.js` file, let's remove the contents and in its place add this simple, functional component.
 
 
 ```js
@@ -262,7 +267,7 @@ To start, in our `/src/App.js` file, let's remove the contents and in its place 
 import React from 'react'
 
 // define our Hello component
-const Hello = () => {
+function Hello() {
 
     // Make sure to return some UI
     return (
@@ -273,13 +278,27 @@ const Hello = () => {
 export default Hello
 ```
 
+<details>
+  <summary>Here’s the same component, but written in ES6:</summary>
+
+```
+import React from 'react'
+
+const Hello = () => (
+	<div>Hello World</div>
+)
+
+export default Hello
+```
+</details>
+
 Let's break down the things we see here:
 
 `import React from 'react'`
 
 This imports React methods from the React library.
 
-`const Hello = () => {}`
+`function Hello()`
 
 This is the component we're creating. In this example, we are creating a functional component and calling it "Hello."
 
@@ -291,7 +310,7 @@ Every functional component must return _**one**_ jsx tag. This is what renders t
 
 > Note!
 >
-> That heading tag above looks like it's straight out of HTML, but it's actually a special language called JSX, which you'll see on the next page. For now, know that JSX will act like HTML when it's rendered to the screen.
+> That heading tag above looks like it's straight out of HTML, but it's actually a special language called JSX, which you'll see in the next section. For now, know that JSX will act like HTML when it's rendered to the screen.
 
 `export default Hello`
 
@@ -312,15 +331,15 @@ If you switch to your browser and navigate to [`http://localhost:3000`](http://l
 
 ## JSX
 
-> Hey you got your html in my javascript!
+> Hey you got your HTML in my JavaScript!
 >
-> You got your javascript in my html!
+> You got your JavaScript in my HTML!
 >
-> (https://youtu.be/O7oD_oX-Gio?t=5s)
+> Hey You Got Peanut Butter in My Chocolate, [Reese's Peanut Butter Cups](https://youtu.be/O7oD_oX-Gio?t=5s)
 
 Let's talk about the value that the render method returns. It looks an awful lot like an HTML heading, but it's not. We often write out React components in JSX.
 
-JSX is [a language that compiles to Javascipt](http://blog.yld.io/2015/06/10/getting-started-with-react-and-node-js/#.V8eDk5MrJPN) that allows us to write code that strongly resembles HTML. It is eventually compiled to lightweight JavaScript objects.
+JSX is [a language that compiles to Javascipt](http://blog.yld.io/2015/06/10/getting-started-with-react-and-node-js/#.V8eDk5MrJPN) and allows us to write code that strongly resembles HTML. It is eventually compiled to lightweight JavaScript objects.
 
 Your Hello component's render method:
 
@@ -335,11 +354,9 @@ The JSX creates a heading with 'Hello World!'.
 
 ### Learning Objectives
 
-_After this lesson, students will be able to:_
-
-*   [ ] Describe the Virtual DOM versus the standard DOM
-*   [ ] Diagram how components are called, assembled and placed on the real DOM
-*   [ ] Use .jsx file extentions for files containing JSX
+* Describe the Virtual DOM versus the standard DOM
+* Diagram how components are called, assembled and placed on the real DOM
+* Use `.jsx` file extentions for files containing JSX
 
 ## Virtual DOM Intro
 
@@ -381,14 +398,12 @@ Since React keeps this representation of what is on the page, it can be very
 smart when it updates the page only to change the DOM that needs to be changed.
 More on this later.
 
-## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Props
+## Props
 
 ### Learning Objectives
 
-_After this lesson, students will be able to:_
-
-*   [ ] Describe the role props plays in our applications
-*   [ ] Create a component that renders props
+* Describe the role props plays in our applications
+* Create a component that renders props
 
 ### Component Data with Props
 
@@ -408,7 +423,7 @@ The question is, how do we add a name to our `Event` component without hardcodin
 
 Find out! Try it yourself alongside [this video](https://generalassembly.wistia.com/medias/gchiu63slo) in [this codepen](https://codepen.io/susir/pen/vxWypq) _(note: right click both for new tab!)_
 
-### Hello World exercise - You do!
+### You Do - Hello World Exercise
 
 ### Code along: Adding props to our component
 
@@ -423,6 +438,17 @@ In your `src/App.js`, we'll change the line that renders the `Event` component t
 `<Event title="Eric's Birthday Party" />`
 
 > We pass in data wherever we are rendering our component. In rendering the `Event` component above, we pass in a prop called "title" with a value of "Eric's Birthday Party".
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Hello from './App.js';
+
+ReactDOM.render(
+  <Hello name={"Nick"} />,
+  document.getElementById('root')
+)
+```
 
 Now, every time we render our component, we will pass in data.
 
@@ -455,23 +481,123 @@ export default Event;
 
 > Check it out! You should be able to browse to http://localhost:3000 to view this change!
 
-## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Multiple Props
+## Multiple Props
 
 ### Learning Objectives
 
-_After this lesson, students will be able to:_
+* Pass multiple individual props to a component
+* Pass multiple props as an object to a component
 
-*   [ ] Pass multiple individual props to a component
-*   [ ] Pass multiple props as an object to a component
-
-### What about... multiple props?
+### Intro to multiple props?
 
 Of course, we often want components to display more complex information. To do so, we can pass multiple properties to our component! We'll use the same two steps we took to add the first prop.
 
 First, add another prop to the component call: `<Event title="Eric's Birthday Party" />,` changes to `<Hello name="Eric's Birthday Party" time="7:45 - 9pm" />`.
 
-Now, in our component definition we have access to both values. Try updating the component using `this.props.time` in the place we hardcoded the value previously.
+Update your `index.js` file to reflect this:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Hello from './App';
+
+ReactDOM.render(
+  <Hello name={"Nick"} age={24} />,
+  document.getElementById('root')
+)
+```
+
+Now, in our component definition we have access to both values. Try updating the `Hello` component using `props.age` in the place we hardcoded the value previously.
+
+```
+export default function Hello(props) {
+  return (
+    <div>
+      <h1>Hello {props.name}!</h1>
+      <p>You are {props.age} years old.</p>
+    </div>
+  );
+};
+```
 
 > Check it out! You should be able to browse to http://localhost:3000 to view this change!
+
+### Multiple props passed from an object
+
+If we have many props, it might get difficult to keep track when we're passing everything in to render a component. A better practice is to organize values in some kind of object and then pass props to the component from that object. Let's see this strategy.
+
+Currently, in index.js, we put Nick's name and age directly into the ReactDOM.render call. Instead, we'll create an object that holds Nick's name and age, making it clearer for other developers and easier to change in the future. In your index.js file, below the import statements, add this object definition:
+
+```
+var person = {
+  personName: "Nick",
+  personAge: 24
+}
+```
+Next, we'll update what's passed into the component. Near the bottom of your index.js, modify the ReactDOM.render() call:
+
+```
+ReactDOM.render(
+  <Hello
+    name={person.personName}
+    age={person.personAge}
+  />,
+  document.getElementById('root')
+)
+```
+
+We don't have to change anything in App.jsx, because it's still receiving exactly the same values for exactly the same two props - name and age. We're just sending it those values in a slightly different way.
+
+### Multiple props from a more complex object
+
+Since we're just pulling props out of an object, we can use any object we want. For example, we can nest an array inside it.
+
+Let's say our user has some favorite animals. Update your object to include an array:
+
+```
+const person = {
+  personName: "Nick",
+  personAge: 24,
+  favorites: [
+    "capybaras",
+    "Tigers",
+    "Dinosaurs count!"
+  ],
+};
+```
+Now we can use this new information as a prop, just like normal. You could choose to pass a single element (favorites[0]) or the entire array. We'll use the entire array so that the component can display all a person's favorite animals. First, update your ReactDOM.render() call in index.js:
+
+```
+ReactDOM.render(
+  <Hello
+    name={person.personName}
+    age={person.personAge}
+    animals={person.favorites}
+  />,
+  document.getElementById('root')
+)
+```
+
+If you check your application now, nothing has changed. Remember, a component class will just ignore any props it receives that it doesn't use. But, we want to use the favorite animals! So, second, update your Hello class render method in App.jsx:
+
+```
+<div>
+  <h1>Hello {props.name}!</h1>
+  <p>You are {props.age} years old.</p>
+  <p>You love: {props.animals}</p>
+</div>
+```
+
+If you check the page now, you'll see React prints the entire array, as that's what was passed in. If we wanted to include all the animals clearly, we could fix the spacing. Instead, to review some syntax, let's just modify the code to render the first value.
+
+```
+<div>
+  <h1>Hello {props.name}!</h1>
+  <p>You are {props.age} years old.</p>
+  <p>You love: {props.animals[0]}</p>
+</div>
+```
+
+Check it out!
 
 _[Read more about using props in JSX, if you'd like!](https://facebook.github.io/react/docs/jsx-in-depth.html) This link is also in the Further Reading page at the end of the React module, under the Facebook documentation._
