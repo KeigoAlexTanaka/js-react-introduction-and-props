@@ -67,91 +67,6 @@ React will work with any back-end language, but for project 3 and in our in-clas
   The visual template the user sees, often populated with data from our models.
 </details>
 
-### You Do: Hello World Exercise
-
-#### Preparation
-
-*   Add [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) to Chrome
-*   Babel syntax highlighter for your text editor
-    *   Sublime: [Babel](https://packagecontrol.io/packages/Babel)
-    *   Atom: [Babel](https://atom.io/packages/language-babel)
-
-#### Learning Objectives
-
-_After this lesson, students will be able to:_
-
-*   Build a React app using `create-react-app`
-*   View `create-react-app` working locally
-
-## Initial Setup
-
-An easy way to start React projects is to use a program called [`create-react-app`](https://github.com/facebook/create-react-app). 
-This excellent tool, maintained by the React team, sets up a bare-bones React app.
-
-Let's use `npm` to install it globally so we'll always have it available in our terminal:
-
-```bash
-npm install -g create-react-app
-```
-
-Once it's installed, create a new directory to store the app you're about to write and `cd` to the folder. Then, use the tool to create a new React app. 
-You'll have to give your new app a name; we're calling the example app "hello_world", since that'll be our first project.
-
-```sh
-npm init react-app hello_world
-```
-
-The tool creates a new directory called `hello_world` inside the current folder. Once the installation is done, you can open your project folder:
-
-```sh
-cd hello_world
-```
-
-Use `npm start` to start a server that will serve your new React application:
-
-```bash
-npm start
-```
-
-You can view the app at `http://localhost:3000`
-
-> You have now set up a Hello World app that you will continue working on during this lesson's exercises!
-
-> Note: If you ever need to stop the server, you can hit `ctrl-c` in the terminal window.
-
-You'll notice the web page automatically refreshes every time we save a file in the directory. 
-This is an awesome feature called live reloading. that `create-react-app` comes with. No more hitting refresh!
-
-You can look in the directory and see the initial project structure that `create-react-app` provides for us and all its dependencies:
-
-```sh
-hello_world
-├── README.md
-├── package.json
-├── public
-│   ├── favicon.ico
-│   └── index.html
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── index.css
-    ├── index.js
-    └── logo.svg
-```
-
-Most of the important files are in the `src` directory. Specifically, we'll be using `src/App.js` and `src/index.js`.
-
----
-
-### Stop / Catch Up / Investigate
-
-Take some time and look at what's been generated. Specifically pay attention to `src/App.js` and `src/index.js`
-
-Make small changes to the code in `src/App.js`, `src/index.js`, and `public/index.html` just to see what happens.
-
-Your basic React app is up and running. Now you're ready to add complexity.
-
 ## Components and JSX
 
 #### Learning Objectives
@@ -267,6 +182,75 @@ As you're drawing this out, think about the following questions:
 * Where do you see `nested components`? Where do you not?
 * Are there any components that share the same structure?
 * Of these similar components, what is different about them?
+
+---
+
+## Initial Setup
+
+In order to create a new project and to get our development environment setup, we are going to use the Terminal command [`create-react-app`](https://github.com/facebook/create-react-app). `create-react-app` is an NPM package built by Facebook that writes our build dependencies for us so that we can do less configuration. 
+
+First, let's use `npm` to install `create-react-app` globally so we'll always have it available in our Terminal:
+
+```bash
+npm install -g create-react-app
+```
+
+Once it's installed, create a new directory to store the app you're about to write and `cd` into the folder. Then, use the tool to create a new React app. 
+You'll have to give your new app a name; we're calling the example app `hello_world`, since that'll be our first project.
+
+```sh
+npm init react-app hello_world
+```
+
+The tool creates a new directory called `hello_world` inside the current folder. Once the installation is done, you can open your project folder:
+
+```sh
+cd hello_world
+```
+
+Use `npm start` to start a server that will serve your new React application:
+
+```bash
+npm run start
+```
+
+After running `$ npm run start`, we can view the app at `http://localhost:3000`
+
+> You have now set up a Hello World app that you will continue working on during this lesson's exercises!
+
+> Note: If you ever need to stop the server, you can hit `ctrl-c` in the terminal window.
+
+You'll notice the web page automatically refreshes every time we save a file in the directory. This is an awesome feature called live reloading that `create-react-app` comes with.
+
+You can look in the directory and see the initial project structure that `create-react-app` provides for us and all its dependencies:
+
+```sh
+hello_world
+├── README.md
+├── package.json
+├── public
+│   ├── favicon.ico
+│   └── index.html
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── index.css
+    ├── index.js
+    └── logo.svg
+```
+
+Most of the important files, which are primarily the ones where we will be working today, are in the `src` directory.
+
+---
+
+### Stop / Catch Up / Investigate
+
+Take some time and look at what's been generated. Specifically pay attention to `src/App.js` and `src/index.js`
+
+Make small changes to the code in `src/App.js`, `src/index.js`, and `public/index.html` just to see what happens.
+
+Your basic React app is up and running. Now you're ready to add complexity.
 
 ### We Do: Hello World - A Very Basic Component
 
