@@ -1,10 +1,23 @@
-## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Intro to React.js
+## ![ga-logo](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Intro to React.js
 
----
 
 ![react-logo](./images/react-white-logo.png)
 
----
+## Learning Objectives
+
+* Explain what a frontend framework is and why they can be helpful in writing more complex applications.
+* Explain what ReactJS is and where it fits in our applications' stack.
+* Explain the component model of web development.
+* Create and render React components in the browser.
+
+## Framing
+
+### What is a Frontend Framework?
+
+- A framework is software providing generic functionality and structure that serves as foundation to build and deploy applications.
+- Frameworks can help standardize code, give you additional functionality and performance, and can help get your code off the ground faster.  
+- There are [many](https://stateofjs.com/2017/front-end/) front end frameworks and each goes about solving problems of how state is managed, updated, and represented by a view but there are many commonalities.
+- There is a lot of debate over whether frontend frameworks count as frameworks at all -- some people say that they are just libraries and should be referred to as such.
 
 ### What is ReactJS?
 
@@ -19,39 +32,51 @@ First, let's think about where you might see a React.js app. Here are two quick 
 
 For an intro to React, watch [this video](https://generalassembly.wistia.com/medias/lr8idjxtx8).
 
-The React library was built to solve one problem: building large applications with data that changes over time.
+React is a JavaScript framework used to craft modern day UI and views for the front-end in web applications.
 
-Before React, re-rendering one thing meant re-rendering everything.
-This had negative implications on processing power and ultimately user experience, which at times became glitchy and laggy.
+> **Selling Point:** By modeling small compatible components that focus on just rendering a view, we can move business logic out of the DOM, and therefore improve our app's performance, maintainability, modularity and readability.
 
 React is "agnostic" to other tools in your front end. This means that React can 
 co-exist with other Javascript frameworks, letting the other frameworks handle 
-the models and controllers and having React sort out the views.
+the models and controllers while having React handle the views.
 
-#### Some History
+### Some History
 
-For a quick rundown, React was...
+The first thing most people hear about React is "Facebook uses it."
 
 *   First used by Facebook in 2011.
 *   Adopted by Instagram in 2012.
 *   Made open source in May 2013.
 
-This can be extrapolated to - both Facebook and Instagram are React apps!
+React was born out of Facebook's frustration with the traditional MVC model and:
 
-To get more hands on and in-depth down the React rabbit hole, let's keep going!
+  * how re-rendering something meant re-rendering **everything** (or just a lot).
+  * how it had negative implications on processing power and ultimately user experience, which at times became glitchy and laggy.
 
 _If you want to get an in-depth taste of what React is all about, [here's an introduction from React.js Conf 2015](https://www.youtube.com/watch?v=KVZ-P-ZI6W4&feature=youtu.be&t=510). We'd recommend starting around the 8:35 mark and watching until 16:30._
 
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Hello World exercise - You do!
 
-### Preparation
+### React in MVC
+
+React can be thought of as the "Views" layer.
+
+React will work with any back-end language, but for project 3 and in our in-class examples we will be using Mongoose and Express for the models and controllers.
+
+<details>
+  <summary>What is the role of a <strong>view</strong> in a front-end Javascript application? Click arrow for answer:</summary>
+  The visual template the user sees, often populated with data from our models.
+</details>
+
+### You Do: Hello World Exercise
+
+#### Preparation
 
 *   Add [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) to Chrome
 *   Babel syntax highlighter for your text editor
     *   Sublime: [Babel](https://packagecontrol.io/packages/Babel)
     *   Atom: [Babel](https://atom.io/packages/language-babel)
 
-### Learning Objectives
+#### Learning Objectives
 
 _After this lesson, students will be able to:_
 
@@ -60,24 +85,23 @@ _After this lesson, students will be able to:_
 
 ## Initial Setup
 
-An easy way to start React projects is to use a program called `create-react-app`. 
+An easy way to start React projects is to use a program called [`create-react-app`](https://github.com/facebook/create-react-app). 
 This excellent tool, maintained by the React team, sets up a bare-bones React app.
 
-Let's use `npm` to install it globally so we'll always have it available in our terminal. Run:
+Let's use `npm` to install it globally so we'll always have it available in our terminal:
 
 ```bash
 npm install -g create-react-app
 ```
 
-Once it's installed, create a new directory to store the app you're about to write 
-and `cd` to the folder. Then, use the tool to create a new React app. 
+Once it's installed, create a new directory to store the app you're about to write and `cd` to the folder. Then, use the tool to create a new React app. 
 You'll have to give your new app a name; we're calling the example app "hello_world", since that'll be our first project.
 
 ```sh
-create-react-app hello_world
+npm init react-app hello_world
 ```
 
-The tool creates a new directory for your app, so move into it...
+The tool creates a new directory called `hello_world` inside the current folder. Once the installation is done, you can open your project folder:
 
 ```sh
 cd hello_world
@@ -98,9 +122,10 @@ You can view the app at `http://localhost:3000`
 You'll notice the web page automatically refreshes every time we save a file in the directory. 
 This is an awesome feature called live reloading. that `create-react-app` comes with. No more hitting refresh!
 
-You can look in the directory and see the structure that `create-react-app` provides for us. It looks like this:
+You can look in the directory and see the initial project structure that `create-react-app` provides for us and all its dependencies:
 
 ```sh
+hello_world
 ├── README.md
 ├── package.json
 ├── public
@@ -127,9 +152,9 @@ Make small changes to the code in `src/App.js`, `src/index.js`, and `public/inde
 
 Your basic React app is up and running. Now you're ready to add complexity.
 
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Components and JSX
+## Components and JSX
 
-### Learning Objectives
+#### Learning Objectives
 
 _After this lesson, students will be able to:_
 
@@ -138,25 +163,23 @@ _After this lesson, students will be able to:_
 *   Build a React component
 *   Describe what JSX is transpiled into
 
-### Preparation
+#### Preparation
 
 *   Have `create-react-app` installed
 
 ## Components
 
-The basic unit you'll be working with in ReactJS is a **component**. Components are pieces of our application that we can define once and reuse all over the place.
+The basic unit you'll be working with in ReactJS is a **component**. Components are pieces of our application that we can define once and reuse throughout.
 
-> **Note!**
->
-> For the next day or so, we'll be working with _functional components_. These are lightweight versions of the more robust class-based components we'll see later.
->
-> _**Hint:**_ Functional components are functions; regular components are classes.
-
-For an intro to components, watch [this video](https://generalassembly.wistia.com/medias/h64z7lp1ir) (note: right click to open in a new tab!).
+For an intro to components, watch [this video](https://generalassembly.wistia.com/medias/h64z7lp1ir) (Note: right click to open in a new tab).
 
 If you're used to writing out all of a page's view in a single HTML file, using components is a very different way of approaching web development.
 
-With components, there is more integration and less separation of HTML, CSS, and JavaScript.
+![Templates Page](images/templates-page.png)
+![Components Page](images/components-page.png)
+> Source: [WanderOak - Fixed Templates vs. Components](https://wanderoak.co/fixed-templates-vs-components/)
+
+With components, there is more integration and less separation of code based purely on file type (HTML, CSS, and JavaScript), and more towards a **component-based** separation of concerns.
 
 *   Instead of creating a few large files, you will organize your web app into small, reusable components that encompass their own content, presentation, and behavior.
 
@@ -164,123 +187,167 @@ When using React, building components will be your main front-end task.
 
 *   Because they're so encapsulated, components make it easy to reuse your code, test, and separate concerns.
 
-### Identifying Components
+![Wireframe](images/train-wireframe.png)
+![Wireframe with components](images/wireframe_deconstructed.png)
+> [MakeTea - Building Robust Apps with React](http://maketea.co.uk/2014/03/05/building-robust-web-apps-with-react-part-1.html)
 
-Take a look at [CraigsList](https://boston.craigslist.org/search/aap) (note: right click to open in a new tab!).
+Notice the structure of how the various components are nested:
+	
+```
+- TubeTracker
+    - Network
+        - Line
+    - Predictions
+        - DepartureBoard
+            - Trains
+```
+
+- `TubeTracker` contains the application
+- `Network` displays each line on the network
+- `Line` displays the stations on a line
+- `Predictions` controls the state of the departure board
+- `DepartureBoard` displays the current station and platforms
+- `Trains` displays the trains due to arrive at a platform
+
+### We Do: Identifying Components
+
+Take a look at [CraigsList](https://boston.craigslist.org/search/aap) (Note: right click to open in a new tab).
 
 ![Components](images/craigslist.png)
 
-Each listing is a component. How can you identify this?
+<details>
+  <summary>Each listing is a component. How can you identify this?</summary>
 
 *   Listings look identical in structure, but have different information populating them
 *   Listings are dynamically generated based on the user's search
+</details>
 
-Now, go to [Amtrak.com](https://www.amtrak.com/home) (note: right click to open in a new tab!). We want to look at the listing page, so put in any "From" (for example, New York - Penn Station), any "To" (for example, Boston - South Station), and pick any date. Hit "Find Trains". Now look at the listing page:
+---
 
-![Amtrak](images/amtrak.png)
+### [F.I.R.S.T. Components](https://addyosmani.com/first/)
 
-Scrolling down it, identify the visual "components" the website is comprised of. We suggest drawing this out on paper! So something like this...
+A React component is built to expect an input and render a UI with it. More importantly, a well-structured component only receives data specific to its purpose.
 
-![Component diagram](images/wireframe_deconstructed.png)
+This is because React follows a more **functional** approach to programming. For React components under this approach, **the same input will always produce the same output**.
 
-As you're drawing this out, think about the following questions...
+Best practice is that React components follow the **F.I.R.S.T.** guidelines
 
-*   Where do you see "nested components;" that is, where are there components inside another component? Where do you see just one "layer" instead?
-*   Are there any components that share the same structure?
-*   For components that share the same structure, what is different about them?
+#### Focused
 
-### So -
+Components should do one thing and do it well.
 
-What does a component look like? Let's start with a simple "Hello World" example...
+#### Independent
 
-### Hello World exercise - You do!
+Components should increase cohesion and reduce coupling. Behavior in one component should not impact the behavior of another. In other words, components should not rely on one another.
 
-#### Code along: A Very Basic Component
+> But they should compliment one another.
 
-In this section, we'll walk through:
+#### Reusable
 
-*   Creating a component that displays basic information.
+Components should be written in a way that reduces the duplication of code.
 
-To start, create a new component in `src/Event/index.js`
+#### Small
+
+Ideally, components should be short and condensed.
+
+#### Testable
+
+Because the same input will always produce the same output, components are easily unit testable.
+
+### You Do: Identifying Components 
+
+> 10 minutes exercise. 5 minutes review.
+
+* Break into groups of three
+* Each group will look at one of the following websites: AirBnB, BBC, Bleacher Report, Flipboard, Imgur, Instagram, Khan Academy, Netflix, Postmates, and Reddit
+* Identify the visual "components" the website is comprised of. Use markers to draw these out on the wall or your desk.
+
+As you're drawing this out, think about the following questions:
+
+* Where do you see `nested components`? Where do you not?
+* Are there any components that share the same structure?
+* Of these similar components, what is different about them?
+
+### We Do: Hello World - A Very Basic Component
+
+To start, in our `/src/App.js` file, let's remove the contents and in its place add this component definition.
+
 
 ```js
 // bring in React from react
-import React, { Component } from "react";
+import React from 'react'
 
 // define our Hello component
-class Event extends Component {
-  render() {
-    // what should the component render?
-    // make sure to return some UI
+const Hello = () => {
+
+    // Make sure to return some UI
     return (
-      <div>
-        <h2>Basketball Practice</h2>
-        <p>7:45 - 9 pm</p>
-      </div>
+      <h1>Hello World!</h1>
     );
-  }
 }
 
-export default Event;
+export default Hello
 ```
 
-and then put it in the JSX of the `<App />` (`src/app.js`) component.
-
-Let's break down the things we see here...
+Let's break down the things we see here:
 
 `import React from 'react'`
 
 This imports React methods from the React library.
 
-`class Event extends Component`
+`const Hello = () => {}`
 
-This is the component we're creating.
+This is the component we're creating. In this example, we are creating a functional component and calling it "Hello."
 
 `return()`
 
 Every functional component must return _**one**_ jsx tag. This is what renders the component to the screen, (i.e., it controls what is displayed for this component). From this function, we return what we want to display.
 
+- In our case, we are rendering a "Hello World!" heading: `<h1>Hello World!</h1>`.
+
 > Note!
 >
 > That heading tag above looks like it's straight out of HTML, but it's actually a special language called JSX, which you'll see on the next page. For now, know that JSX will act like HTML when it's rendered to the screen.
 
-`export default Event`
+`export default Hello`
 
-This exposes the `Event` class to other files. This means that other files can `import` from the `App.js` file in order to use the `Event` class. In our case, we'll be importing it into `index.js` by calling an `import` to `App.js`.
+This exposes the `Hello` component to other files. This means that other files can `import` from the `App.js` file in order to use the `Hello` component. In our case, we'll be importing it into `index.js` by calling an `import` to `App.js`.
 
 When we try to import something from `App.js`, JavaScript will attempt to match a named export.
 
-*   Our only named export in `App.js` is `Event`.
+*   Our only named export in `App.js` is `Hello`.
 
-The `default` keyword means that if we try to import anything from this file that the app can't find, JavaScript will automatically revert to importing `Event` instead.
+The `default` keyword means that if we try to import anything from this file that the app can't find, JavaScript will automatically revert to importing `Hello` instead.
 
 *   Only one default export is allowed per file.
 
 ### Check it out!
 
-If you switch to your browser and navigate to http://localhost:3000, you can see your event heading. This app dynamically reloads each time you save, so you can check your changes at any point.
+If you switch to your browser and navigate to [`http://localhost:3000`](http://localhost:3000), you can see your "Hello World" heading. This app dynamically reloads each time you save, so you can check your changes at any point.
 
-### Wait - What's that HTML doing in my Javascript?
 
-Our JavaScript has...HTML in it? What is that? 
+## JSX
 
-Try it yourself:
+> Hey you got your html in my javascript!
+>
+> You got your javascript in my html!
+>
+> (https://youtu.be/O7oD_oX-Gio?t=5s)
 
-1.  Go here: [Babeljs.io](https://babeljs.io/repl/)
-1.  Click on "try it out"
-1.  You should now see a split screen similar to below
-1.  Paste in `<h1>Hello World!</h1>` in the left panel.
-1.  Write nested JSX elements and see what happens.
-1.  You should see the resulting plain javascript on the right.
-1.  Try any other HTML you might know and see what happens
+Let's talk about the value that the render method returns. It looks an awful lot like an HTML heading, but it's not. We often write out React components in JSX.
 
-![](images/babeljs.png)
+JSX is [a language that compiles to Javascipt](http://blog.yld.io/2015/06/10/getting-started-with-react-and-node-js/#.V8eDk5MrJPN) that allows us to write code that strongly resembles HTML. It is eventually compiled to lightweight JavaScript objects.
 
-So, JSX allows us to write code that strongly resembles HTML. It is eventually compiled to lightweight JavaScript function calls.
+Your Hello component's render method:
 
-> React can be written without JSX. We won't be doing this, but if you want to learn more, [check out this blog post](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/) (note: open in new tab!).
+* Currently returns JSX, not HTML.
+The JSX creates a heading with 'Hello World!'.
+* Your component reads this and renders a "Hello World!" heading.
 
-## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) The Virtual DOM
+> React can be written without JSX. If you want to learn more, [check out this blog post](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/).  
+
+
+## The Virtual DOM
 
 ### Learning Objectives
 
@@ -292,11 +359,16 @@ _After this lesson, students will be able to:_
 
 ## Virtual DOM Intro
 
-You should be familiar with the DOM. The **Virtual DOM** is a key piece of how React works.
+You may have noticed that our src/index.js code mentions ReactDOM. ReactDOM doesn't refer to the same DOM we know. Instead, it refers to a Virtual DOM. The Virtual DOM is a key piece of how React works.
 
 So, how is this different? Watch [this video](https://generalassembly.wistia.com/medias/v5qyqsir0s) to find out.
 
-In React, the virtual DOM is React's representation of the DOM as a plain JavaScript object.
+The Virtual DOM is a Javascript representation of the actual DOM. The virtual DOM is a staging area for changes that will eventually be implemented.
+
+- Because of that, React can keep track of changes in the actual DOM by comparing different instances of the Virtual DOM.
+- React then isolates the changes between old and new instances of the Virtual DOM and then only updates the actual DOM with the necessary changes.
+- By only making the "necessary changes," as opposed to re-rendering an entire view altogether, we save up on processing power.
+- This is not unlike Git, with which you compare the difference -- or diff -- between two commits.
 
 The JSX
 
