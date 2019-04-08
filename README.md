@@ -254,29 +254,10 @@ Your basic React app is up and running. Now you're ready to add complexity.
 
 ### We Do: Hello World - A Very Basic Component
 
-To start, in our `/src/App.js` file, let's remove the contents and in its place add this simple, functional component.
+To start, in our `/src/App.js` file, let's remove the existing contents and in its place add this simple, functional component.
 
 
 ```js
-// bring in React from react
-import React from 'react'
-
-// define our Hello component
-function Hello() {
-
-    // Make sure to return some UI
-    return (
-      <h1>Hello World!</h1>
-    );
-}
-
-export default Hello
-```
-
-<details>
-  <summary>Here’s the same component, but written in ES6:</summary>
-
-```
 import React from 'react'
 
 const Hello = () => (
@@ -284,6 +265,24 @@ const Hello = () => (
 )
 
 export default Hello
+```
+
+<details>
+  <summary>Here’s the same component, but written in ES5:</summary>
+
+```
+// bring in React from react
+import React from 'react'
+
+// define our Hello component
+export default function Hello() {
+
+    // Make sure to return some UI
+    return (
+      <h1>Hello World!</h1>
+    );
+}
+
 ```
 </details>
 
@@ -319,6 +318,40 @@ The `default` keyword means that if we try to import anything from this file tha
 
 *   Only one default export is allowed per file.
 
+<details>
+  <summary>Here’s the `Hello` component, but written as a class:</summary>
+
+```
+// bring in React and Component instance from React
+import React, {Component} from 'react'
+
+// define our Hello component
+class Hello extends Component {
+  // what should the component render
+  render () {
+    // Make sure to return some UI
+    return (
+      <h1>Hello World!</h1>
+    )
+  }
+}
+
+export default Hello
+```
+
+`class Hello`
+
+* This is the component we're creating. In this example, we are creating a "Hello" component.
+
+`extends Component`
+
+* This is the React library class we inherit from to create our component definition.
+
+`render()`
+
+* Every component has, at minimum, a render method. It generates a Virtual DOM node that will be added to the actual DOM. Looks just like a regular ol' DOM node, but it's not yet attached to the DOM.
+</details>
+
 ### Check it out!
 
 If you switch to your browser and navigate to [`http://localhost:3000`](http://localhost:3000), you can see your "Hello World" heading. This app dynamically reloads each time you save, so you can check your changes at any point.
@@ -336,10 +369,9 @@ Let's talk about the value that the render method returns. It looks an awful lot
 
 JSX is [a language that compiles to Javascipt](http://blog.yld.io/2015/06/10/getting-started-with-react-and-node-js/#.V8eDk5MrJPN) and allows us to write code that strongly resembles HTML. It is eventually compiled to lightweight JavaScript objects.
 
-Your Hello component's render method:
+Your `Hello` component's `return` method renders the component to the screen:
 
-* Currently returns JSX, not HTML.
-The JSX creates a heading with 'Hello World!'.
+* Currently returns JSX, not HTML. The JSX creates a heading with 'Hello World!'.
 * Your component reads this and renders a "Hello World!" heading.
 
 > React can be written without JSX. If you want to learn more, [check out this blog post](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/).  
@@ -430,31 +462,6 @@ Properties! Every component has `.props`
 * Properties are immutable. That is, they cannot be changed while your program is running.
 * We define properties in development and pass them in as attributes to the JSX element in our `.render` method.
 
-First we can pass multiple properties to our component when its rendered in `src/index.js`.
-
-```js
-ReactDOM.render(
-  <Hello name={"Tamara"} city={Brooklyn} />,
-  document.getElementById('root')
-)
-```
-
-Then in our component definition we have access to both values...
-
-```js
-class Hello extends Component {
-  render () {
-    return (
-      <div>
-        <h1>Hello {this.props.name}</h1>
-        <p>You currently live in {this.props.city}.</p>
-      </div>
-    )
-  }
-}
-
-```
-
 ### Component Data with Props
 
 The React framework was built to handle data that changes over time.
@@ -504,26 +511,21 @@ Now, every time we render our component, we will pass in data.
 
 If you check your application now, nothing has changed. We're passing the `name` prop into the component, but the component isn't _using_ it yet.
 
-In our component definition we can use the `this.props.name` variable to access the value passed into the component.
+In our component definition we can use the `props.name` variable to access the value passed into the functional component.
 
 ```js
-class Hello extends Component {
-  render() {
-    return (
-      <div>
-        <h2>{this.props.name}</h2>
-        <p>New York City</p>
-      </div>
-    );
-  }
-}
+const Hello = (props) => (
+  <div>
+    <h1>Hello {props.name}</h1>
+  </div>
+)
 ```
 
-In the above example, we replaced "world" with `{this.props.name}`.
+In the above example, we replaced "world" with `{props.name}`.
 
 > The `{}` syntax in JSX renders the result of any JavaScript expression inside it. It works even without props. If you wrote `{2+2}` in your JSX, `4` would be rendered.
 
-> Check it out! You should be able to browse to http://localhost:3000 to view this change!
+> Check it out! You should be able to browse to [`http://localhost:3000`](http://localhost:3000) to view this change!
 
 ## Multiple Props
 
@@ -536,7 +538,7 @@ In the above example, we replaced "world" with `{this.props.name}`.
 
 Of course, we often want components to display more complex information. To do so, we can pass multiple properties to our component! We'll use the same two steps we took to add the first prop.
 
-First, add another prop to the component call: `<Hello name="Jennifer" />,` changes to `<Hello name="Tamara" city="Brooklyn" />`.
+First, add another prop to the component call: `<Hello name="Tamara" />,` changes to `<Hello name="Tamara" city="Brooklyn" />`.
 
 Update your `index.js` file to reflect this:
 
@@ -573,9 +575,9 @@ If we have many props, it might get difficult to keep track when we're passing e
 Currently, in `index.js`, we put Tamara's name and city directly into the ReactDOM.render call. Instead, we'll create an object that holds Tamara's name and city, making it clearer for other developers and easier to change in the future. In your `index.js` file, below the import statements, add this object definition:
 
 ```
-var person = {
+const person = {
   personName: "Tamara",
-  personAge: "Brooklyn"
+  personCity: "Brooklyn"
 }
 ```
 Next, we'll update what's passed into the component. Near the bottom of your `index.js`, modify the `ReactDOM.render()` call:
@@ -645,102 +647,3 @@ If you check the page now, you'll see React prints the entire array, as that's w
 Check it out!
 
 _[Read more about using props in JSX, if you'd like!](https://facebook.github.io/react/docs/jsx-in-depth.html) This link is also in the Further Reading page at the end of the React module, under the Facebook documentation._
-
-### You Do - A Blog Post
-
-Let's have some practice creating a React component from scratch. How about a blog post?
-
-* Create a `post` object literal in `src/index.js` above `ReactDOM.render()` that has the below properties.
-  1. `title`
-  2. `author`
-  3. `body`
-  4. `comments` (array of strings)
-* Render these properties using a Post component.
-* The composition of your Post is up to you.
-
-If you finish early, try experimenting with CSS (Make Sure you use `className` instead of `class` in `JSX`!)
-
----
-
-#### Q: What problems did you encounter when trying to add multiple comments to your Post?
-
-It would be a pain to have to explicitly define every comment inside of `<Post />`, especially if each comment itself had multiple properties.
-
-* This problem is a tell tale sign that our separation of concerns is being stretched, and it's time to break things into a new component.
-
-We can nest a `Comment` component within a `Post` component.
-
-* We create these comments the same way we did with posts: `extends Component` and `render`
-* Then we can reference a comment using `<Comment />` inside of Post's render method.
-
-Let's create a new file for our Comment component, `src/Comment.js`...
-
-```js
-import React, {Component} from 'react'
-
-class Comment extends Component {
-  render () {
-    return (
-      <div>
-        <p>{this.props.message}</p>
-      </div>
-    )
-  }
-}
-
-export default Comment
-```
-
-Then in `src/App.js`, we need to load in our `Comment` component and render it inside of our `Post` component...
-
-```js
-import React, { Component } from 'react';
-// Load in Comment component
-import Comment from './Comment.js'
-
-
-class Post extends Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <p>By {this.props.author}</p>
-        <div>
-          <p>{this.props.body}</p>
-        </div>
-        <h3>Comments:</h3>
-        // Render Comment component, passing in data
-        <Comment message={this.props.comments[0]} />
-      </div>
-    );
-  }
-}
-
-export default Post;
-```
-
-> **Note**: We could put all of our code in one file, but it's considered a good practice to break components out into different files to help practice separation of concerns. The only downside is we have to be extra conscious of remembering to **export / import** each component to where it's rendered.
-
-The above code works, but we'd have to hard-code all of our `Comments`.  This is not very dry and our code will not dynamically change.  The best way to handle this is to set a variable equal to all of the `<Comments />` for this post.  We can do this using `.map` in `Post's` `render` method.
-
-We can use `.map` in `Post's` `render` method to avoid having to hard-code all of our `Comments`
-
-```js
-class Post extends Component {
-  render() {
-    let comments = this.props.comments.map((comment, index) => (
-      <Comment message={comment} key={index}/>
-    ))
-    return(
-      <div className='post-page'>
-        <h1>{this.props.title}</h1>
-        <h2>By {this.props.author}</h2>
-        <p>{this.props.body}</p>
-
-        <h3>Comments</h3>
-        {comments}
-      </div>
-    )
-  }
-}
-```
